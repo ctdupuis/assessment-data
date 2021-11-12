@@ -261,5 +261,15 @@ module.exports = {
         )
         .then(dbRes => res.status(200).send(dbRes[0]))
         .catch(err => console.log('error getting cities', err));
+    },
+    deleteCity: (req, res) => {
+        const cityId = req.params.id;
+        sequelize.query(
+            `
+            delete from cities where city_id = ${cityId};
+            `
+        )
+        .then(dbRes => res.status(200).send(dbRes[0]))
+        .catch(err => console.log('error deleting city', err));
     }
 }
