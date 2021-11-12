@@ -249,5 +249,17 @@ module.exports = {
         )
         .then(dbRes => res.status(200).send(dbRes[0]))
         .catch(err => console.log('error creating city', err));
+    },
+    getCities: (req, res) => {
+        sequelize.query(
+            `
+            select city.city_id, city.name as city, city.rating, country.country_id, country.name as country
+            from cities city
+            join countries country
+            on city.country_id = country.country_id;
+            `
+        )
+        .then(dbRes => res.status(200).send(dbRes[0]))
+        .catch(err => console.log('error getting cities', err));
     }
 }
